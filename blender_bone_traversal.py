@@ -1,5 +1,11 @@
 import bpy
 
+bl_info = {
+    "name": "Bone Traversal",
+    "blender": (2, 93, 0),
+    "category": "Pose",
+}
+
 
 def select_bones(bones, select=True):
     """Select a list of bones"""
@@ -52,45 +58,65 @@ def prev_bone():
     bpy.props.cur_bone = prev_bone
 
 
-def register_operator(idname, label, func):
-    """Register bones.set/next/prev"""
-    class Op(bpy.types.Operator):
-        bl_idname = idname
-        bl_label = label
-        def execute(self, context):
-            func()
-            return {'FINISHED'}
-    bpy.utils.register_class(Op)
-    
-
-def register_panel():
+class Panel(bpy.types.Panel):
     """Show Bone Traversal side panel in 3D View"""
-    class Panel(bpy.types.Panel):
-        bl_idname = "BONE_TRAVERSAL_PT_PANEL"
-        bl_label = "Bone Traversal"
-        bl_space_type = 'VIEW_3D'
-        bl_region_type = 'UI'
-        bl_category = "Bone Traversal"
-        @classmethod
-        def poll(cls, context):
-            return context.mode in {'POSE'}
-        def draw(self, context):
-            layout = self.layout
-            box = layout.box()
-            box.operator("bones.set")
-            row = box.row()
-            row.operator("bones.prev")
-            row.operator("bones.next")
+
+    bl_idname = "BONE_TRAVERSAL_PT_PANEL"
+    bl_label = "Bone Traversal"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = "Bone Traversal"
+
+    @classmethod
+    def poll(cls, context):
+        return context.mode in {'POSE'}
+
+    def draw(self, context):
+        layout = self.layout
+        box = layout.box()
+        box.operator("bones.set")
+        row = box.row()
+        row.operator("bones.prev")
+        row.operator("bones.next")
+
+
+class OpSetBones(bpy.types.Operator):
+    bl_idname = 'bones.set'
+    bl_label = 'Set Bones'
+
+    def execute(self, context):
+        set_bones()
+        return {'FINISHED'}
+
+
+class OpNextBone(bpy.types.Operator):
+    bl_idname = 'bones.next'
+    bl_label = 'Next Bone'
+
+    def execute(self, context):
+        next_bone()
+        return {'FINISHED'}
+
+
+class OpPrevBone(bpy.types.Operator):
+    bl_idname = 'bones.prev'
+    bl_label = 'Prev Bone'
+
+    def execute(self, context):
+        prev_bone()
+        return {'FINISHED'}
+
+
+def register():
+    bpy.utils.register_class(OpSetBones)
+    bpy.utils.register_class(OpNextBone)
+    bpy.utils.register_class(OpPrevBone)
     bpy.utils.register_class(Panel)
 
 
-def main():
-    register_operator('bones.set', 'Set Bones', set_bones)
-    register_operator('bones.next', 'Next Bone', next_bone)
-    register_operator('bones.prev', 'Prev Bone', prev_bone)
-    register_panel()
-    
-
-if __name__ == '__main__':
-    main()
+def unregister():
+    bpy.utils.unregister_class(OpSetBones)
+    bpy.utils.unregister_class(OpNextBone)
+    bpy.utils.unregister_class(OpPrevBone)
+    bpy.utils.unregister_class(Panel)
 
