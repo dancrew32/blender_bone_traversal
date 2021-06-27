@@ -16,7 +16,7 @@ def select_bones(bones, select=True):
 def set_armature_active_bone(bone):
     """Update the Armatures active bone to refresh properties panel"""
     arm = bpy.context.active_object
-    arm.data.bones.active = next_bone
+    arm.data.bones.active = bone
 
 
 def set_bones():
