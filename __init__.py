@@ -120,3 +120,6 @@ def unregister():
     bpy.utils.unregister_class(OpPrevBone)
     bpy.utils.unregister_class(Panel)
 
+
+if __name__ == "__main__":
+    register()
