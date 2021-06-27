@@ -11,8 +11,14 @@ def select_bones(bones, select=True):
     """Select a list of bones"""
     for bone in bones:
         bone.select = select
-    
-    
+
+
+def set_armature_active_bone(bone):
+    """Update the Armatures active bone to refresh properties panel"""
+    arm = bpy.context.active_object
+    arm.data.bones.active = next_bone
+
+
 def set_bones():
     """Set a list of bones for bone traversal"""
     pose_bones = bpy.context.selected_pose_bones_from_active_object
@@ -37,6 +43,7 @@ def next_bone():
     next_bone = cur_bones[next_index]
     select_bones(cur_bones, False)
     select_bones([next_bone])
+    set_armature_active_bone(next_bone)
     bpy.props.cur_bone = next_bone
 
 
@@ -55,6 +62,7 @@ def prev_bone():
     prev_bone = cur_bones[prev_index]
     select_bones(cur_bones, False)
     select_bones([prev_bone])
+    set_armature_active_bone(prev_bone)
     bpy.props.cur_bone = prev_bone
 
 
