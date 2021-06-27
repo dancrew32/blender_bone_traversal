@@ -11,8 +11,8 @@ With this script, it makes it much easier to cycle between a subset of bones.
 Blender 2.93+ (Tested in LTS)
 
 ## Installation
-1. Download Latest Release https://github.com/dancrew32/blender_bone_traversal/archive/refs/tags/v1_2.zip
-2. Edit > Preferences > Add-ons > Install > blender_bone_traversal-1_2.zip
+1. Download Latest Release https://github.com/dancrew32/blender_bone_traversal/archive/refs/tags/v1_4.zip
+2. Edit > Preferences > Add-ons > Install > blender_bone_traversal-1_4.zip
 3. Enable "Bone Traversal" add-on.
 3. Observe "Bone Traversal" panel in 3D View during Pose Mode (see usage).
 
