@@ -3,7 +3,7 @@ import bpy
 bl_info = {
     "name": "Bone Traversal",
     "blender": (2, 93, 0),
-    "category": "Pose",
+    "category": "3D View",
 }
 
 
